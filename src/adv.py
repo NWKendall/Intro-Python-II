@@ -1,5 +1,5 @@
 from room import Room
-
+from player import Player
 # Declare all the rooms
 
 room = {
@@ -49,3 +49,18 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+player = Player("", "")
+while True:
+    player.name = input("Welcome hero, what is your name? ")
+    start_game = input(f"If the perils become to much, you can escape by pressing 'Q'. Are you ready to begin {player.name}? (y/n) ")
+
+    if start_game.lower().strip() == "n":
+        print("See you soon!")
+        break
+    else:
+        player.room = room['outside']
+        print(f"You find yourself",player.room)
+
+
+
+
