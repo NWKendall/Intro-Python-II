@@ -17,7 +17,11 @@ class Player:
         return f"{self.name} is in {self.current_room}"
 
 class Inventory(Player):
-    def __init__(self, name, current_room, loot):
+    def __init__(self, name, current_room, items=[]):
         super().__init__(name, current_room)
-        self.loot = []
+        self.items = items
+    
+    def view_items(self):
+        for i in self.items:
+            print(i)
 

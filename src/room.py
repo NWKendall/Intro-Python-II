@@ -14,6 +14,10 @@ class Room:
         return f"{self.room_name}. {self.description}"
 
 class List(Room):
-    def __init__(self, room_name, description, items):
+    def __init__(self, room_name, description, loot=[]):
         super().__init__(room_name, description)
-        self.items = []
+        self.loot = loot
+    
+    def search(self):
+        for l in self.loot:
+            print(l)

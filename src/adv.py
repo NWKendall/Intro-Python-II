@@ -82,12 +82,12 @@ def intro():
 def prompt():
     os.system('clear')
     print("##################################")
-    print(f"~     {player.current_room.room_name}       ~")
-    print("##################################")
+    display(player.current_room.room_name)
+    print("\n##################################")
     print("                                  ")
     print("                                  ")
-    print(f"{player.current_room.description}")
-    print("                                  ")
+    display(player.current_room.description)
+    print("\n                                  ")
     print("                                  ")
     print("##################################")
     print(f"\n ===============")
@@ -221,22 +221,23 @@ def main_game():
         welcome()
         intro()
 
+def display(text_var):
+    for character in text_var:
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(0.05)
 
 def welcome():
     os.system('clear')
     name_question = "Welcome hero, what is your name?"
-    def display():
-        for character in name_question:
-            sys.stdout.write(character)
-            sys.stdout.flush()
-            time.sleep(0.05)
+    
     
     print("##################################")
     print("#           Dark Dungeon         #")
     print("##################################")
     print("                                  ")
     print("                                  ")
-    print(f"{display()}                      ")
+    display(name_question)
     print("                                  ")
     print("                                  ")
     print("##################################")
