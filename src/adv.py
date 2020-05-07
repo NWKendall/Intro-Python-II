@@ -94,35 +94,35 @@ def prompt():
     print(f"Which way?")
     user_input = input("> ")
     user_action = user_input.lower().strip()
-    cardinal = ["n", "s", "e", "w", "q"]
+    cardinal = ["n", "s", "e", "w", "q", "north", "south", "east", "west", "quit"]
     while user_action not in cardinal:
         print("Not a direction, try again or press 'Q' to quit.\n")
         user_action = input("> ")
     if user_action == "q":
         quit()
     else:
-        if user_action == "n":
+        if user_action == "n" or "north":
             if player.current_room.n_to:
                 player.current_room = player.current_room.n_to
                 prompt()
             else:
                 wrong_way()
                 prompt()
-        elif user_action == "e":
+        elif user_action == "e" or "east":
             if player.current_room.e_to:
                 player.current_room = player.current_room.e_to
                 prompt()
             else:
                 wrong_way()
                 prompt()
-        elif user_action == "s":
+        elif user_action == "s" or "south":
             if player.current_room.s_to:
                 player.current_room = player.current_room.s_to
                 prompt()
             else:
                 wrong_way()
                 prompt()
-        elif user_action == "w":
+        elif user_action == "w" or "west":
             if player.current_room.w_to:
                 player.current_room = player.current_room.w_to
                 prompt()

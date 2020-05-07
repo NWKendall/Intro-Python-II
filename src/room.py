@@ -9,8 +9,11 @@ class Room:
         self.s_to = None
         self.e_to = None
         self.w_to = None
-        self.loot = None
     
     def __str__(self):
         return f"{self.room_name}. {self.description}"
 
+class List(Room):
+    def __init__(self, room_name, description, items):
+        super().__init__(room_name, description)
+        self.items = []

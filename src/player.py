@@ -16,4 +16,8 @@ class Player:
     def __str__(self):
         return f"{self.name} is in {self.current_room}"
 
+class Inventory(Player):
+    def __init__(self, name, current_room, loot):
+        super().__init__(name, current_room)
+        self.loot = []
 
