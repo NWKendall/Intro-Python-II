@@ -1,3 +1,13 @@
+import cmd
+import textwrap
+import sys
+import os
+import time
+import random
+
+
+
+
 from room import Room
 from player import Player
 # Declare all the rooms
@@ -38,7 +48,6 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player("", "", "", 100)
 
 # Write a loop that:
 #
@@ -51,54 +60,53 @@ player = Player("", "", "", 100)
 #
 # If the user enters "q", quit the game.
 
-player.name = input("Welcome hero, what is your name? ")
-while player.hp > 0:
 
-    start_game = input(f"If the perils become to much, you can escape by pressing 'Q'. Are you ready to begin {player.name}? (y/q) ")
-    if start_game.lower().strip() == "q":
-        print("See you soon!")
-        break
 
-    player.current_room = room['outside']
-    print(f"You find yourself",player.current_room,"...")
-    directionInput = input("You can move by pressing 'N', 'S', 'E', 'W' to navigate. Enter the cave when you're ready...")
-   
-   
-    try:
-        if directionInput.lower().strip() == "q":
-            print("CHICKEN!")
-            break
-        elif directionInput.lower().strip() != "n":
-            print("So inert on the looming cave, you forgot about the type rope you were walking and fell to a grizzly death")
-            player.hp = 0
-            break
-        # navigate to foyer ✅
-        elif directionInput.lower().strip() == "n":
-            print(f"**{player.name} walked north...**")
-            print(f"You find yourself in the {player.current_room.n_to}...")
-            player.current_room = room['foyer']
-            directionInput = input("Which way?")
+# navigation
 
-            try:
+player = Player("", "outside")
 
-                # navigate to overlook
-                if directionInput.lower().strip() != "n":
-                    print("So inert on the looming cave, you forgot about the type rope you were walking and fell to a grizzly death")
-                    player.hp = 0
-                    directionInput = input("Which way?")
-                    
-        # navigate to narrow ✅
-        elif directionInput.lower().strip() == "e":
-            print(f"**{player.name} walked east...**")
-            print(f"You find yourself in the {player.current_room.e_to}...")
-            player.current_room = player.current_room.e_to
-            directionInput = input("Which way?")
-        # navigate to outside
-        elif directionInput.lower().strip() == "s":
-            print(f"**{player.name} walked south...**")
-            print(f"You find yourself in the {player.current_room.s_to}...")
-            player.current_room = player.current_room.s_to
-            directionInput = input("Which way?")
+def print_room():
+    print(f"##### {player.current_room.upper()} #####")
+    print(f"{room[player.current_room]}")
+    prompt()
 
-    except ValueError:
-        print("asdas")
+def prompt():
+    print(f"\n ===============")
+    print(f"Which way?")
+    user_action = input("> ")
+    cardinal = ["n", "s", "e", "w", "q"]
+    while user_action.lower().strip() not in cardinal:
+        print("Not a direction, try again or press 'Q' to quit.\n")
+        user_action = input("> ")
+    if user_action.lower().strip() == "q":
+        sys.exit()
+    elif user_action.lower().strip() in cardinal:
+        player.current_room = player.current_room.n_to
+        player.explore()
+        print_room()
+
+
+# title screen
+
+# creates player
+
+# player defines name
+
+
+def main_game():
+    while player.hp > 0 and player.game_over is False:
+        welcome()
+
+def welcome():
+    os.system('clear')
+    name_question = "Welcome hero, what is your name?"
+    for character in name_question:
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(0.05)
+    player_name = input("> ")
+    player.name = player_name
+    print_room()
+
+main_game()

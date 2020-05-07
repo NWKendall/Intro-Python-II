@@ -2,11 +2,16 @@
 # currently.
 
 class Player:
-    def __init__(self, room_name, current_room, direction, hp):
-        self.room_name = room_name
+    def __init__(self, name, current_room):
+        self.name = name
+        self.hp = 100
         self.current_room = current_room
-        self.direction = direction
-        self.hp = hp
+        self.direction = None
+        self.game_over = False
+    
+    # need move function here
+    def explore(self):
+        print(f"**{self.name} moved to {self.current_room}**")
 
     def __str__(self):
         return f"{self.name} is in {self.current_room}"
