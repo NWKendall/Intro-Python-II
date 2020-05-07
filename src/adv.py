@@ -64,11 +64,11 @@ room['treasure'].s_to = room['narrow']
 
 # navigation
 
-player = Player("", "outside")
+player = Player("", room['outside'])
 
 def intro():
-    print(f"##### {player.current_room} #####")
-    print(f"{room[player.current_room]}")
+    print(f"##### {player.current_room.room_name} #####")
+    print(f"{player.current_room.description}")
     prompt()
 
 def prompt():
@@ -81,11 +81,21 @@ def prompt():
         user_action = input("> ")
     if user_action.lower().strip() == "q":
         sys.exit()
-    elif user_action.lower().strip() in cardinal:
-        player.current_room = room[player.current_room].n_to
-        player.explore()
-        prompt()
+    else:
+        try:
+            if player.current_room.n_to and user_action.lower().strip() == "n":
+                player.current_room = player.current_room.n_to
+                player.explore()
+                prompt()
+            else:
+                while user_action.lower().strip() not in cardinal:
+                    print("Can't go that way!")
+                    user_action = input("> ")
 
+        
+        except ValueError:
+            print("asdasdasd")
+    
 
 # title screen
 

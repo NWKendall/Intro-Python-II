@@ -3,7 +3,7 @@
 
 class Room:
     def __init__(self, room_name, description):
-        self.name = room_name
+        self.room_name = room_name
         self.description = description
         self.n_to = None
         self.s_to = None
@@ -11,5 +11,5 @@ class Room:
         self.w_to = None
     
     def __str__(self):
-        return f"{self.name}. {self.description}"
+        return f"{self.room_name}. {self.description}"
 
