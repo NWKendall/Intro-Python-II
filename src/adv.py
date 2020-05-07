@@ -91,59 +91,24 @@ def prompt():
     print("                                  ")
     print("##################################")
     print(f"\n ===============")
-    print(f"Which way?")
+    print(f"Which way?") # rename to action chooser, choose movement or search
     user_input = input("> ")
     user_action = user_input.lower().strip()
-    cardinal = ["n", "s", "e", "w", "q", "north", "south", "east", "west", "quit"]
-    while user_action not in cardinal:
-        print("Not a direction, try again or press 'Q' to quit.\n")
-        user_action = input("> ")
-    if user_action == "q":
-        quit()
+    while user_action not in ["n", "s", "e", "w", "north", "south", "east", "west", "q", "quit", "exit"]:
+        print("Not a direction or instruction, try again or press 'Q' to quit.\n")
+        user_input = input("> ")
+        user_action = user_input.lower().strip()
+
+    if user_action == ["q", "quit", "exit"]:
+            quit()
     else:
-        if user_action == "n" or "north":
-            if player.current_room.n_to:
-                player.current_room = player.current_room.n_to
+        if user_action == ["n", "s", "e", "w", "north", "south", "east", "west"]:
+            if player.current_room:
+                player.current_room = player.change_room(player.current_room, user_action)
                 prompt()
             else:
                 wrong_way()
                 prompt()
-        elif user_action == "e" or "east":
-            if player.current_room.e_to:
-                player.current_room = player.current_room.e_to
-                prompt()
-            else:
-                wrong_way()
-                prompt()
-        elif user_action == "s" or "south":
-            if player.current_room.s_to:
-                player.current_room = player.current_room.s_to
-                prompt()
-            else:
-                wrong_way()
-                prompt()
-        elif user_action == "w" or "west":
-            if player.current_room.w_to:
-                player.current_room = player.current_room.w_to
-                prompt()
-            else:
-                wrong_way()
-                prompt()
-
-
-
-# def change_room(user_action, cardinal):
-#     if user_action.lower().strip() == cardinal:
-#             if player.current_room.[f"{cardinal}"]_to:
-#                 player.current_room = player.current_room.[f"{cardinal}"]_to
-#                 player.explore()
-#                 prompt()
-#             else:
-#                 print("Nothing lies for you that way...")
-#                 prompt()
-
-
-
 
 def wrong_way():
     # time.sleep(3.0)
@@ -156,11 +121,11 @@ def wrong_way():
         user_action = input("> ")
 
 def quit():
-    print("are you sure? (Y/N)")
+    print("are you sure? (Y/N)\n")
     answer = input("> ")
     while len(quit.lower().strip()) > 1:
         print("Please select Y or N")
-        print("are you sure? (Y/N)")
+        print("are you sure? (Y/N)\n")
         answer = input("> ")
     if quit.lower().strip() == "y":
         print("See you next time...")
@@ -188,25 +153,26 @@ def title_screen():
 def title_screen_options():
     option_input = input("> ")
     option = option_input.lower().strip()
-    if option == "play":
+    if option == "p" or "play":
         main_game()
-    elif option == "help":
+    elif option == ["help", "h", "?"]:
         help_menu()
-    elif option == "quit":
+    elif option == ["quit", "exit", "q"]:
         sys.exit()
 
-    while option not in ['play', 'help', 'quit']:
+    while option not in ['play', 'help', 'quit', "exit", "p", "h", "q", "?"]:
         print("Please choose one of the options")
-        if option == ("play"):
+        if option == ["p", "play"]:
             main_game()
-        elif option == ("help"):
+        elif option == ["help", "h,", "?"]:
             help_menu()
-        elif option == ("quit"):
+        elif option == ["quit", "exit", "q"]:
             sys.exit()
 
 # help menu
 
 def help_menu():
+    os.system("clear")
     print("Type 'Play' to start the game, or 'Quit' to Quit")
     back = input("Return to Title Screen? (Y/N")
     answer = back.lower().strip()
@@ -243,5 +209,7 @@ def welcome():
     print("##################################")
     player_name = input("> ")
     player.name = player_name
+
+
 
 title_screen()
