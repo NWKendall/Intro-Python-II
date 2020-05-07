@@ -82,19 +82,42 @@ def prompt():
     if user_action.lower().strip() == "q":
         sys.exit()
     else:
-        try:
-            if player.current_room.n_to and user_action.lower().strip() == "n":
+        if user_action.lower().strip() == "n":
+            if player.current_room.n_to:
                 player.current_room = player.current_room.n_to
                 player.explore()
                 prompt()
             else:
-                while user_action.lower().strip() not in cardinal:
-                    print("Can't go that way!")
-                    user_action = input("> ")
+                print("Nothing lies for you that way...")
+                prompt()
+        elif user_action.lower().strip() == "e":
+            if player.current_room.e_to:
+                player.current_room = player.current_room.e_to
+                player.explore()
+                prompt()
+            else:
+                print("Nothing lies for you that way...")
+                prompt()
+        elif user_action.lower().strip() == "s":
+            if player.current_room.s_to:
+                player.current_room = player.current_room.s_to
+                player.explore()
+                prompt()
+            else:
+                print("Nothing lies for you that way...")
+                prompt()
+        elif user_action.lower().strip() == "w":
+            if player.current_room.w_to:
+                player.current_room = player.current_room.w_to
+                player.explore()
+                prompt()
+            else:
+                print("Nothing lies for you that way...")
+                prompt()
+
 
         
-        except ValueError:
-            print("asdasdasd")
+ 
     
 
 # title screen
