@@ -67,11 +67,29 @@ room['treasure'].s_to = room['narrow']
 player = Player("", room['outside'])
 
 def intro():
-    print(f"##### {player.current_room.room_name} #####")
+    os.system('clear')
+    print("##################################")
+    print(f"~     {player.current_room.room_name}       ~")
+    print("##################################")
+    print("                                  ")
+    print("                                  ")
     print(f"{player.current_room.description}")
+    print("                                  ")
+    print("                                  ")
+    print("##################################")
     prompt()
 
 def prompt():
+    os.system('clear')
+    print("##################################")
+    print(f"~     {player.current_room.room_name}       ~")
+    print("##################################")
+    print("                                  ")
+    print("                                  ")
+    print(f"{player.current_room.description}")
+    print("                                  ")
+    print("                                  ")
+    print("##################################")
     print(f"\n ===============")
     print(f"Which way?")
     user_input = input("> ")
@@ -86,35 +104,33 @@ def prompt():
         if user_action == "n":
             if player.current_room.n_to:
                 player.current_room = player.current_room.n_to
-                player.explore()
                 prompt()
             else:
-                print("Nothing lies for you that way...")
+                wrong_way()
                 prompt()
         elif user_action == "e":
             if player.current_room.e_to:
                 player.current_room = player.current_room.e_to
-                player.explore()
                 prompt()
             else:
-                print("Nothing lies for you that way...")
+                wrong_way()
                 prompt()
         elif user_action == "s":
             if player.current_room.s_to:
                 player.current_room = player.current_room.s_to
-                player.explore()
                 prompt()
             else:
-                print("Nothing lies for you that way...")
+                wrong_way()
                 prompt()
-        elif user_action.lower().strip() == "w":
+        elif user_action == "w":
             if player.current_room.w_to:
                 player.current_room = player.current_room.w_to
-                player.explore()
                 prompt()
             else:
-                print("Nothing lies for you that way...")
+                wrong_way()
                 prompt()
+
+
 
 # def change_room(user_action, cardinal):
 #     if user_action.lower().strip() == cardinal:
@@ -126,7 +142,19 @@ def prompt():
 #                 print("Nothing lies for you that way...")
 #                 prompt()
 
-        
+
+
+
+def wrong_way():
+    # time.sleep(3.0)
+    print("Nothing lies for you that way...")
+    user_input = input("> ")
+    user_action = user_input.lower().strip()
+    cardinal = ["n", "s", "e", "w", "q"]
+    while user_action not in cardinal:
+        print("Nothing lies for you that way...")
+        user_action = input("> ")
+
 def quit():
     print("are you sure? (Y/N)")
     answer = input("> ")
@@ -145,33 +173,36 @@ def quit():
 
 def title_screen():
     os.system('clear')
-    print("############################")
-    print("#        Dark Dungeon      #")
-    print("############################")
-    print("           -Play-           ")
-    print("           -Help-           ")
-    print("           -Quit-           ")
-    print("############################")
+    print("##################################")
+    print("#           Dark Dungeon         #")
+    print("##################################")
+    print("                                  ")
+    print("              -Play-              ")
+    print("              -Help-              ")
+    print("              -Quit-              ")
+    print("                                  ")
+    print("##################################")
     title_screen_options()
 
 
 def title_screen_options():
-    os.system('clear')
     option_input = input("> ")
     option = option_input.lower().strip()
-    def options():
-        if option == "play":
-            main_game()
-        elif option == "help":
-            help_menu()
-        elif option == "quit":
-            quit()
-    options()
+    if option == "play":
+        main_game()
+    elif option == "help":
+        help_menu()
+    elif option == "quit":
+        sys.exit()
 
     while option not in ['play', 'help', 'quit']:
         print("Please choose one of the options")
-        options()
-
+        if option == ("play"):
+            main_game()
+        elif option == ("help"):
+            help_menu()
+        elif option == ("quit"):
+            sys.exit()
 
 # help menu
 
@@ -194,10 +225,21 @@ def main_game():
 def welcome():
     os.system('clear')
     name_question = "Welcome hero, what is your name?"
-    for character in name_question:
-        sys.stdout.write(character)
-        sys.stdout.flush()
-        time.sleep(0.05)
+    def display():
+        for character in name_question:
+            sys.stdout.write(character)
+            sys.stdout.flush()
+            time.sleep(0.05)
+    
+    print("##################################")
+    print("#           Dark Dungeon         #")
+    print("##################################")
+    print("                                  ")
+    print("                                  ")
+    print(f"{display()}                      ")
+    print("                                  ")
+    print("                                  ")
+    print("##################################")
     player_name = input("> ")
     player.name = player_name
 
