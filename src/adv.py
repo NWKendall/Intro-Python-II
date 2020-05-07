@@ -94,21 +94,26 @@ def prompt():
     print(f"Which way?") # rename to action chooser, choose movement or search
     user_input = input("> ")
     user_action = user_input.lower().strip()
-    while user_action not in ["n", "s", "e", "w", "north", "south", "east", "west", "q", "quit", "exit"]:
-        print("Not a direction or instruction, try again or press 'Q' to quit.\n")
-        user_input = input("> ")
-        user_action = user_input.lower().strip()
+    cardinal = ["n", "s", "e", "w", "north", "south", "east", "west", "q", "quit", "exit"]
+    done = False
+    while not done:
 
-    if user_action == ["q", "quit", "exit"]:
+        if user_action in ["q", "quit", "exit"]:
             quit()
-    else:
-        if user_action == ["n", "s", "e", "w", "north", "south", "east", "west"]:
-            if player.current_room:
+        
+        if user_action in ["n", "s", "e", "w"]:
+            if len(user_action) == 1:
+                print('user action', user_action)
                 player.current_room = player.change_room(player.current_room, user_action)
                 prompt()
-            else:
+            else: 
                 wrong_way()
                 prompt()
+
+        else:   
+            print("Not a valid direction or instruction, try again or press 'Q' to quit.\n")
+            user_input = input("> ")
+            user_action = user_input.lower().strip()
 
 def wrong_way():
     # time.sleep(3.0)
@@ -123,7 +128,7 @@ def wrong_way():
 def quit():
     print("are you sure? (Y/N)\n")
     answer = input("> ")
-    while len(quit.lower().strip()) > 1:
+    while len(answer.lower().strip()) > 1:
         print("Please select Y or N")
         print("are you sure? (Y/N)\n")
         answer = input("> ")

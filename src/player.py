@@ -9,14 +9,15 @@ class Player:
         self.direction = None
         self.game_over = False
     
-    def change_room(self, current_room, move):
-        new_location = move + "_to"
+    def change_room(self, location, move):
+        attribute = move + "_to"
 
-        if hasattr(current_room, new_location):
-            print(current_room, new_location)
-            return getattr(current_room, new_location)
-            
-        return current_room
+        if hasattr(location, attribute):
+            print(location, attribute)
+            return getattr(location, attribute)
+
+        print("ascaasdasdasdas")   
+        return location
 
 
     def __str__(self):
