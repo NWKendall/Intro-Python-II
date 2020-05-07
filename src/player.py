@@ -11,7 +11,7 @@ class Player:
     
     # need move function here
     def explore(self):
-        print(f"**{self.name} moved to {self.current_room}**")
+        print(f"{self.name} moved to XXXXXX \n {self.current_room}")
 
     def __str__(self):
         return f"{self.name} is in {self.current_room}"

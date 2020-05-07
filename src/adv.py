@@ -66,8 +66,8 @@ room['treasure'].s_to = room['narrow']
 
 player = Player("", "outside")
 
-def print_room():
-    print(f"##### {player.current_room.upper()} #####")
+def intro():
+    print(f"##### {player.current_room} #####")
     print(f"{room[player.current_room]}")
     prompt()
 
@@ -82,9 +82,9 @@ def prompt():
     if user_action.lower().strip() == "q":
         sys.exit()
     elif user_action.lower().strip() in cardinal:
-        player.current_room = player.current_room.n_to
+        player.current_room = room[player.current_room].n_to
         player.explore()
-        print_room()
+        prompt()
 
 
 # title screen
@@ -97,6 +97,8 @@ def prompt():
 def main_game():
     while player.hp > 0 and player.game_over is False:
         welcome()
+        intro()
+
 
 def welcome():
     os.system('clear')
@@ -107,6 +109,5 @@ def welcome():
         time.sleep(0.05)
     player_name = input("> ")
     player.name = player_name
-    print_room()
 
 main_game()
