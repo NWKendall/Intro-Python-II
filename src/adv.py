@@ -74,15 +74,16 @@ def intro():
 def prompt():
     print(f"\n ===============")
     print(f"Which way?")
-    user_action = input("> ")
+    user_input = input("> ")
+    user_action = user_input.lower().strip()
     cardinal = ["n", "s", "e", "w", "q"]
-    while user_action.lower().strip() not in cardinal:
+    while user_action not in cardinal:
         print("Not a direction, try again or press 'Q' to quit.\n")
         user_action = input("> ")
-    if user_action.lower().strip() == "q":
-        sys.exit()
+    if user_action == "q":
+        quit()
     else:
-        if user_action.lower().strip() == "n":
+        if user_action == "n":
             if player.current_room.n_to:
                 player.current_room = player.current_room.n_to
                 player.explore()
@@ -90,7 +91,7 @@ def prompt():
             else:
                 print("Nothing lies for you that way...")
                 prompt()
-        elif user_action.lower().strip() == "e":
+        elif user_action == "e":
             if player.current_room.e_to:
                 player.current_room = player.current_room.e_to
                 player.explore()
@@ -98,7 +99,7 @@ def prompt():
             else:
                 print("Nothing lies for you that way...")
                 prompt()
-        elif user_action.lower().strip() == "s":
+        elif user_action == "s":
             if player.current_room.s_to:
                 player.current_room = player.current_room.s_to
                 player.explore()
@@ -115,17 +116,74 @@ def prompt():
                 print("Nothing lies for you that way...")
                 prompt()
 
+# def change_room(user_action, cardinal):
+#     if user_action.lower().strip() == cardinal:
+#             if player.current_room.[f"{cardinal}"]_to:
+#                 player.current_room = player.current_room.[f"{cardinal}"]_to
+#                 player.explore()
+#                 prompt()
+#             else:
+#                 print("Nothing lies for you that way...")
+#                 prompt()
 
         
- 
+def quit():
+    print("are you sure? (Y/N)")
+    answer = input("> ")
+    while len(quit.lower().strip()) > 1:
+        print("Please select Y or N")
+        print("are you sure? (Y/N)")
+        answer = input("> ")
+    if quit.lower().strip() == "y":
+        print("See you next time...")
+        sys.exit()
+    elif quit.lower().strip() == "n":
+        prompt()
     
 
-# title screen
+# title screen & options
 
-# creates player
+def title_screen():
+    os.system('clear')
+    print("############################")
+    print("#        Dark Dungeon      #")
+    print("############################")
+    print("           -Play-           ")
+    print("           -Help-           ")
+    print("           -Quit-           ")
+    print("############################")
+    title_screen_options()
 
-# player defines name
 
+def title_screen_options():
+    os.system('clear')
+    option_input = input("> ")
+    option = option_input.lower().strip()
+    def options():
+        if option == "play":
+            main_game()
+        elif option == "help":
+            help_menu()
+        elif option == "quit":
+            quit()
+    options()
+
+    while option not in ['play', 'help', 'quit']:
+        print("Please choose one of the options")
+        options()
+
+
+# help menu
+
+def help_menu():
+    print("Type 'Play' to start the game, or 'Quit' to Quit")
+    back = input("Return to Title Screen? (Y/N")
+    answer = back.lower().strip()
+    
+    if back == "y":
+        title_screen_options()
+    else:
+        quit()
 
 def main_game():
     while player.hp > 0 and player.game_over is False:
@@ -143,4 +201,4 @@ def welcome():
     player_name = input("> ")
     player.name = player_name
 
-main_game()
+title_screen()
