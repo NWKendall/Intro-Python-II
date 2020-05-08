@@ -12,7 +12,7 @@ from player import Player
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mouth beckons"),
+"North of you, the cave mouth beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -64,20 +64,6 @@ room['treasure'].s_to = room['narrow']
 player = Player("", room['outside'])
 
 
-def intro():
-    os.system('clear')
-    print("##################################")
-    print(f"~     {player.current_room.room_name}       ~")
-    print("##################################")
-    print("                                  ")
-    print("                                  ")
-    print(f"{player.current_room.description}")
-    print("                                  ")
-    print("                                  ")
-    print("##################################")
-    prompt()
-
-
 def prompt():
     os.system('clear')
     print("##################################")
@@ -89,47 +75,53 @@ def prompt():
     print("\n                                  ")
     print("                                  ")
     print("##################################")
-    print(f"\n ===============")
-    print(f"Which way?")  # rename to action chooser, choose movement or search
-    user_input = input("> ")
-    user_action = user_input.lower().strip()
-    cardinal = ["n", "s", "e", "w", "north",
-                "south", "east", "west", "q", "quit", "exit"]
 
-    if user_action not in cardinal:
-        print("Not a valid direction or instruction, try again or press 'Q' to quit.\n")
+    while player.hp > 0 and player.game_over is False:
+
+        print(f"\n ===============")
+        print(f"Which way?")  # rename to action chooser, choose movement or search
+
         user_input = input("> ")
         user_action = user_input.lower().strip()
-    if user_action in ["n", "s", "e", "w"]:
-        player.current_room = player.change_room(
-            player.current_room, user_action)
-        prompt()
-        # else:
-        #     player.current_room = room[player.current_room]
-        #     wrong_way()
-        #     prompt()            
-    if user_action in ["q", "quit", "exit"]:
-        quit()
-    elif user_action in ["help", "?", "h"]:
-        help_menu()
+        cardinal = ("n", "s", "e", "w", "north",
+                    "south", "east", "west", "q", "quit", "exit", "h", "help" ,"?")
+
+        if user_action not in cardinal:
+            print("Not a valid direction or instruction, try again or press 'Q' to quit.\n")
+            user_input = input("> ")
+            user_action = user_input.lower().strip()
+        if user_action in ("n", "s", "e", "w"):
+            player.current_room = player.change_room(
+                player.current_room, user_action)
+            prompt()
+            # else:
+            #     player.current_room = room[player.current_room]
+            #     wrong_way()
+            #     prompt()
+        if user_action in ("q", "quit", "exit"):
+            quit()
+        if user_action in ("help", "?", "h"):
+            help_menu()
 
 # helper functions
+
+
 def wrong_way():
     print("Nothing lies for you that way...")
     user_input = input("> ")
     user_action = user_input.lower().strip()
-    cardinal = ["n", "s", "e", "w", "q"]
+    cardinal = ("n", "s", "e", "w", "q")
     if user_action in cardinal:
         prompt()
     else:
         wrong_way()
+
 
 def quit():
     print("are you sure? (Y/N)\n")
     answer = input("> ")
     while len(answer.lower().strip()) > 1:
         print("Please select Y or N")
-        print("are you sure? (Y/N)\n")
         answer = input("> ")
     if answer.lower().strip() == "y":
         print("See you next time...")
@@ -138,18 +130,12 @@ def quit():
     elif answer.lower().strip() == "n":
         prompt()
 
-def help_menu():
-    print("Type 'Play' to start the game, use N, S, E, W to navigate or type 'Q' or'Quit' to Quit")
-    back = input("Press 'T' to Return to Title Screen or 'C' tp continue.")
-    answer = back.lower().strip()
 
-    if answer == "t":
-        title_screen_options()
+def help_menu():
+    print("Type 'Play' to start the game or type 'Q' or'Quit' to Qui. use N, S, E, W to navigate")
+    print("In game use 'N', 'S', 'E', 'W' to navigate and 'Enter' to confirm an action")
     
-    if answer == "c":
-        title_screen()
-        title_screen_options()
-        
+
 
 def display(text_var):
     for character in text_var:
@@ -157,13 +143,14 @@ def display(text_var):
         sys.stdout.flush()
         time.sleep(0.05)
 
+
 def main_game():
-    while player.hp > 0 and player.game_over is False:
-        welcome()
-        intro()
+    welcome()
+    prompt()
         # most functionality within prompt function loc 81
 
 # title screen & options
+
 
 def title_screen():
     os.system('clear')
@@ -180,17 +167,20 @@ def title_screen():
 
 
 def title_screen_options():
+    print("Please choose")
     option_input = input("> ")
     option = option_input.lower().strip()
-    while option in ['play', 'help', 'quit', "exit", "p", "h", "q", "?"]:
-        print("Please choose one of the options")
-    if option == "p" or "play":
-        main_game()
-    elif option in ["help", "h", "?"]:
+    if option in ("help", "h", "?"):
         help_menu()
-    elif option in ["quit", "exit", "q"]:
+        title_screen_options()
+    if option in ("p", "play"):
+        main_game()
+    if option in ("quit", "exit", "q"):
         os.system('clear')
         sys.exit()
+    else:
+        title_screen_options()
+
 
 def welcome():
     os.system('clear')
@@ -213,12 +203,11 @@ def welcome():
 title_screen()
 
 
-
 # change_room class method not respecting game boundaires
-# 
 # while loop not recognising cardiunal variable ✅
 # quit function is bugging out ✅
-# menu_help not working
+# in game help not working ✅
+# title help and quit not working ✅
 
 # research
 # whitespace if/else
