@@ -12,15 +12,8 @@ class Player:
 
     def change_room(self, location, move):
         new_direction = move + "_to"
-
-        if hasattr(location, new_direction):
-            print(location, new_direction)
-            return getattr(location, new_direction)
-
-        else:
-            print("Nothing lies for you that way.")
-            return location
-
+        return getattr(location, new_direction)
+        
     def __str__(self):
         return f"{self.name} is in {self.current_room}"
 

@@ -78,7 +78,7 @@ def adventure_screen(header, body):
 
 
 def prompt():
-    room_name = player.current_room.room_name
+    room_name = player.current_room.name
     room_desc = player.current_room.description
     adventure_screen(room_name, room_desc)
     while player.hp > 0 and player.game_over is False:
@@ -92,18 +92,19 @@ def choose_action():
     print(f"[Move, Search, Inventory]")
     user_input = input("> ")
     user_action = user_input.lower().strip()
-    actions = ("move", "m", "search", "s", "quit", "q", "inventory", "i")
-    if user_action == "move":
+    actions = ("move", "m", "search", "s", "quit", "q", "inventory", "i", "help", "?", "h")
+    if user_action in ("move," "m"):
         move_action()
-    if user_action in ("q", "quit", "exit"):
+    elif user_action in ("search," "s"):
+        print("Will be Search function")
+    elif user_action in ("q", "quit", "exit"):
         quit()
-    if user_action in ("help", "?", "h"):
+    elif user_action in ("help", "?", "h"):
         help_menu()
-    if user_action in ("inventory", "i"):
-        print("INVENTORY")
+    elif user_action in ("inventory", "i"):
+        print("Will be INVENTORY")
     else:
-        print("SOMETHING AMIS")
-
+        print("not a valid instruction")
 
 
 def move_action():
@@ -113,35 +114,25 @@ def move_action():
     user_input = input("> ")
     user_action = user_input.lower().strip()
     cardinal = ("n", "s", "e", "w", "north",
-                "south", "east", "west", "actions")
+                "south", "east", "west", "actions", "a")
 
     if user_action not in cardinal:
         print("Not a valid direction or instruction, try again or press 'Q' to quit.\n")
-        user_input = input("> ")
-        user_action = user_input.lower().strip()
+        move_action()
     if user_action in ("n", "s", "e", "w"):
-        player.current_room = player.change_room(
-            player.current_room, user_action)
-        prompt()
-        # else:
-        #     player.current_room = room[player.current_room]
-        #     wrong_way()
-        #     prompt()
-    if user_action == "actions":
+        # stores current room in temp variable for player.curr_room to be reused shold the try fail
+        this_room = player.current_room
+        try:
+            player.current_room = player.change_room(
+                player.current_room, user_action)
+            prompt()
+        except:
+            print("Nothing lies for you that way...")
+            player.current_room = this_room
+            move_action()
+    if user_action in ("actions", "a"):
         choose_action()
     
-
-
-def wrong_way():
-    print("Nothing lies for you that way...")
-    user_input = input("> ")
-    user_action = user_input.lower().strip()
-    cardinal = ("n", "s", "e", "w", "q")
-    if user_action in cardinal:
-        prompt()
-    else:
-        wrong_way()
-
 
 def quit():
     print("are you sure? (Y/N)\n")
