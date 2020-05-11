@@ -155,7 +155,7 @@ def main_game():
 def title_screen():
     os.system('clear')
     print("##################################")
-    print("#           Dark Dungeon         #")
+    print("#         Darkest Dungeon        #")
     print("##################################")
     print("                                  ")
     print("              -Play-              ")
@@ -187,7 +187,7 @@ def welcome():
     name_question = "Welcome hero, what is your name?"
 
     print("##################################")
-    print("#           Dark Dungeon         #")
+    print("#         Darkest Dungeon        #")
     print("##################################")
     print("                                  ")
     print("                                  ")
