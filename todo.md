@@ -2,7 +2,7 @@
 
 
 ## Fixes:
-- change_room class method not respecting game boundaires
+- change_room class method not respecting game boundaires ✅
 - while loop not recognising cardiunal variable ✅
 - quit function is bugging out ✅
 - in game help not working ✅

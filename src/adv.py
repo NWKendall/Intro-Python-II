@@ -63,15 +63,15 @@ room['treasure'].s_to = room['narrow']
 
 player = Player("", room['outside'])
 
-
+# interface functions
 def adventure_screen(header, body):
     os.system('clear')
     print("##################################")
-    display(f"     {header}")
+    text_display(f"     {header}")
     print("\n##################################")
     print("                                  ")
     print("                                  ")
-    display(body)
+    text_display(body)
     print("\n                                  ")
     print("                                  ")
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
@@ -85,66 +85,64 @@ def prompt():
         choose_action()
         
 
-# helper functions
+## player action functions
 
+# routes function based on player input
 def choose_action():
     print(f"Which do you want to do?")
     print(f"[Move, Search, Inventory]")
-    user_input = input("> ")
-    user_action = user_input.lower().strip()
+    user_input = input("> ").lower().strip()
     actions = ("move", "m", "search", "s", "quit", "q", "inventory", "i", "help", "?", "h")
-    if user_action in ("move," "m"):
+    if user_input in ("move," "m"):
         move_action()
-    elif user_action in ("search," "s"):
+    elif user_input in ("search," "s"):
         print("Will be Search function")
-    elif user_action in ("q", "quit", "exit"):
-        quit()
-    elif user_action in ("help", "?", "h"):
+    elif user_input in ("q", "quit", "exit"):
+        quit_game()
+    elif user_input in ("help", "?", "h"):
         help_menu()
-    elif user_action in ("inventory", "i"):
+    elif user_input in ("inventory", "i"):
         print("Will be INVENTORY")
     else:
         print("not a valid instruction")
 
-
+# handles game navigation
 def move_action():
     print(f"\n ===============")
-    print(f"Which way?")  # rename to action chooser, choose movement or search
-
-    user_input = input("> ")
-    user_action = user_input.lower().strip()
+    print(f"Which way?")
+    user_input = input("> ").lower().strip()
     cardinal = ("n", "s", "e", "w", "north",
                 "south", "east", "west", "actions", "a")
 
-    if user_action not in cardinal:
+    if user_input not in cardinal:
         print("Not a valid direction or instruction, try again or press 'Q' to quit.\n")
         move_action()
-    if user_action in ("n", "s", "e", "w"):
+    if user_input in ("n", "s", "e", "w"):
         # stores current room in temp variable for player.curr_room to be reused shold the try fail
         this_room = player.current_room
         try:
             player.current_room = player.change_room(
-                player.current_room, user_action)
+                player.current_room, user_input)
             prompt()
         except:
             print("Nothing lies for you that way...")
             player.current_room = this_room
             move_action()
-    if user_action in ("actions", "a"):
+    if user_input in ("actions", "a"):
         choose_action()
     
-
-def quit():
+# General game functions
+def quit_game():
     print("are you sure? (Y/N)\n")
-    answer = input("> ")
-    while len(answer.lower().strip()) > 1:
+    user_input = input("> ").lower().strip()
+    while len(user_input) > 1:
         print("Please select Y or N")
-        answer = input("> ")
-    if answer.lower().strip() == "y":
+        user_input = input("> ")
+    if user_input == "y":
         print("See you next time...")
         os.system('clear')
         sys.exit()
-    elif answer.lower().strip() == "n":
+    elif user_input == "n":
         prompt()
 
 
@@ -152,9 +150,8 @@ def help_menu():
     print("Type 'Play' to start the game or type 'Q' or'Quit' to Qui. use N, S, E, W to navigate")
     print("In game use 'N', 'S', 'E', 'W' to navigate and 'Enter' to confirm an action")
     
-
-
-def display(text_var):
+# renders text characters when entering room
+def text_display(text_var):
     for character in text_var:
         sys.stdout.write(character)
         sys.stdout.flush()
@@ -166,9 +163,8 @@ def main_game():
     prompt()
         # most functionality within prompt function loc 81
 
+
 # title screen & options
-
-
 def title_screen():
     os.system('clear')
     print("##################################")
