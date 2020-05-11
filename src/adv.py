@@ -64,46 +64,72 @@ room['treasure'].s_to = room['narrow']
 player = Player("", room['outside'])
 
 
-def prompt():
+def adventure_screen(header, body):
     os.system('clear')
     print("##################################")
-    display(player.current_room.room_name)
+    display(f"     {header}")
     print("\n##################################")
     print("                                  ")
     print("                                  ")
-    display(player.current_room.description)
+    display(body)
     print("\n                                  ")
     print("                                  ")
-    print("##################################")
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
+
+def prompt():
+    room_name = player.current_room.room_name
+    room_desc = player.current_room.description
+    adventure_screen(room_name, room_desc)
     while player.hp > 0 and player.game_over is False:
-
-        print(f"\n ===============")
-        print(f"Which way?")  # rename to action chooser, choose movement or search
-
-        user_input = input("> ")
-        user_action = user_input.lower().strip()
-        cardinal = ("n", "s", "e", "w", "north",
-                    "south", "east", "west", "q", "quit", "exit", "h", "help" ,"?")
-
-        if user_action not in cardinal:
-            print("Not a valid direction or instruction, try again or press 'Q' to quit.\n")
-            user_input = input("> ")
-            user_action = user_input.lower().strip()
-        if user_action in ("n", "s", "e", "w"):
-            player.current_room = player.change_room(
-                player.current_room, user_action)
-            prompt()
-            # else:
-            #     player.current_room = room[player.current_room]
-            #     wrong_way()
-            #     prompt()
-        if user_action in ("q", "quit", "exit"):
-            quit()
-        if user_action in ("help", "?", "h"):
-            help_menu()
+        choose_action()
+        
 
 # helper functions
+
+def choose_action():
+    print(f"Which do you want to do?")
+    print(f"[Move, Search, Inventory]")
+    user_input = input("> ")
+    user_action = user_input.lower().strip()
+    actions = ("move", "m", "search", "s", "quit", "q", "inventory", "i")
+    if user_action == "move":
+        move_action()
+    if user_action in ("q", "quit", "exit"):
+        quit()
+    if user_action in ("help", "?", "h"):
+        help_menu()
+    if user_action in ("inventory", "i"):
+        print("INVENTORY")
+    else:
+        print("SOMETHING AMIS")
+
+
+
+def move_action():
+    print(f"\n ===============")
+    print(f"Which way?")  # rename to action chooser, choose movement or search
+
+    user_input = input("> ")
+    user_action = user_input.lower().strip()
+    cardinal = ("n", "s", "e", "w", "north",
+                "south", "east", "west", "actions")
+
+    if user_action not in cardinal:
+        print("Not a valid direction or instruction, try again or press 'Q' to quit.\n")
+        user_input = input("> ")
+        user_action = user_input.lower().strip()
+    if user_action in ("n", "s", "e", "w"):
+        player.current_room = player.change_room(
+            player.current_room, user_action)
+        prompt()
+        # else:
+        #     player.current_room = room[player.current_room]
+        #     wrong_way()
+        #     prompt()
+    if user_action == "actions":
+        choose_action()
+    
 
 
 def wrong_way():
@@ -141,7 +167,7 @@ def display(text_var):
     for character in text_var:
         sys.stdout.write(character)
         sys.stdout.flush()
-        time.sleep(0.05)
+        time.sleep(0.02)
 
 
 def main_game():
@@ -184,17 +210,9 @@ def title_screen_options():
 
 def welcome():
     os.system('clear')
+    header = "Darkest Dungeon"
     name_question = "Welcome hero, what is your name?"
-
-    print("##################################")
-    print("#         Darkest Dungeon        #")
-    print("##################################")
-    print("                                  ")
-    print("                                  ")
-    display(name_question)
-    print("                                  ")
-    print("                                  ")
-    print("##################################")
+    adventure_screen(header, name_question)
     player_name = input("> ")
     player.name = player_name
 
@@ -203,11 +221,4 @@ def welcome():
 title_screen()
 
 
-# change_room class method not respecting game boundaires
-# while loop not recognising cardiunal variable ✅
-# quit function is bugging out ✅
-# in game help not working ✅
-# title help and quit not working ✅
 
-# research
-# whitespace if/else

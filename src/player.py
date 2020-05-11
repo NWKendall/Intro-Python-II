@@ -18,6 +18,7 @@ class Player:
             return getattr(location, new_direction)
 
         else:
+            print("Nothing lies for you that way.")
             return location
 
     def __str__(self):
